@@ -19,7 +19,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        
         if isCameraAvailable()
         {
             imagePicker.delegate = self
@@ -99,6 +100,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
           return
       }
       let photoSourcePicker = UIAlertController()
+      photoSourcePicker.popoverPresentationController?.sourceView = self.view
+        photoSourcePicker.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        
       let takePhoto = UIAlertAction(title: "Take Photo", style: .default) { [unowned self] _ in
           self.presentPhotoPicker(sourceType: .camera)
       }
@@ -117,7 +121,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func presentPhotoPicker(sourceType: UIImagePickerController.SourceType) {
+        print("inside presnt photo picker")
+        
+        
+          // Do any additional setup after loading the view.
+             if let popoverPresentationController = self.popoverPresentationController
+             {
+                 print("inside if ")
+                 popoverPresentationController.sourceView = self.view
+                 popoverPresentationController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+             }
+             
+        
         imagePicker.sourceType = sourceType
+        
         present(imagePicker, animated: true)
     }
     
